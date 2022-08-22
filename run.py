@@ -60,7 +60,18 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
 
-def calculate_surplass_data(sales_row):
+def update_surplus_worksheet(data):
+    """
+    Update the surplas worksheet, add new row with the list data provided.
+    """
+    print("Updating surplus worksheet. . .\n")
+    surplus_worksheet = SHEET.worksheet("surplus")
+    surplus_worksheet.append_row(data)
+    print("Surplus worksheet updated successfully.\n")
+
+
+
+def calculate_surplus_data(sales_row):
     """
     Compare Sales with stock and calculate the surplas for each itme
     type.
@@ -73,12 +84,12 @@ def calculate_surplass_data(sales_row):
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
 
-    surplas_data = []
+    surplus_data = []
 
     for stock, sales in zip(stock_row, sales_row):
-        surplas = int(stock) - sales
-        surplas_data.append(surplas)
-    return surplas_data
+        surplus = int(stock) - sales
+        surplus_data.append(surplus)
+    return surplus_data
 
 
 def main():
@@ -88,8 +99,8 @@ def main():
     data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
-    new_surplas_data = calculate_surplass_data(sales_data)
-    print(new_surplas_data)
+    new_surplus_data = calculate_surplus_data(sales_data)
+    update_surplus_worksheet(new_surplus_data)
 
 print("Welcome to Love Sandwiches Data Automation")
 main()
