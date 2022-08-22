@@ -72,7 +72,13 @@ def calculate_surplass_data(sales_row):
     print("Calculating surplass data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    print(stock_row)
+
+    surplas_data = []
+
+    for stock, sales in zip(stock_row, sales_row):
+        surplas = int(stock) - sales
+        surplas_data.append(surplas)
+    return surplas_data
 
 
 def main():
@@ -82,7 +88,8 @@ def main():
     data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
-    calculate_surplass_data(sales_data)
+    new_surplas_data = calculate_surplass_data(sales_data)
+    print(new_surplas_data)
 
 print("Welcome to Love Sandwiches Data Automation")
 main()
